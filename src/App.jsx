@@ -8,6 +8,9 @@ export default function App() {
 
       {/* Conditional rendering */}
       <UserProfile />
+
+      {/* Rendering lists */}
+      <ShoppingList />
     </div>
   );
 }
@@ -80,3 +83,23 @@ const AdminPanel = () => {
 const LoginForm = () => {
   return <div>LoginForm</div>;
 };
+
+// 4. Rendering lists
+const products = [
+  { title: "Cabbage", isFruit: false, id: 1 },
+  { title: "Orange", isFruit: true, id: 2 },
+  { title: "Garlic", isFruit: false, id: 3 },
+  { title: "Apple", isFruit: true, id: 4 },
+];
+
+function ShoppingList() {
+  const listItems = products.map((p) => (
+    <li
+      key={p.id}
+      className={`${p.isFruit ? "text-fuchsia-500" : "text-green-900"}`}>
+      {p.title}
+    </li>
+  ));
+
+  return <ul>{listItems}</ul>;
+}
