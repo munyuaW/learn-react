@@ -1,3 +1,5 @@
+import { useState } from "react";
+
 export default function App() {
   return (
     <div className="flex flex-col items-center space-y-2">
@@ -11,6 +13,9 @@ export default function App() {
 
       {/* Rendering lists */}
       <ShoppingList />
+
+      {/* Event and state */}
+      <ClickMe />
     </div>
   );
 }
@@ -102,4 +107,21 @@ function ShoppingList() {
   ));
 
   return <ul>{listItems}</ul>;
+}
+
+// responding to events and updating the screen
+function ClickMe() {
+  const [count, setCount] = useState(0);
+
+  function handleClick() {
+    setCount(count + 1);
+  }
+
+  return (
+    <button
+      className="p-2.5 size-8 flex justify-center items-center bg-cyan-300 rounded-full"
+      onClick={handleClick}>
+      {count}
+    </button>
+  );
 }
