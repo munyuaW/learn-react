@@ -1,6 +1,8 @@
 import { useState } from "react";
 
 export default function App() {
+  const greeting = "Hello, and welcome";
+
   return (
     <div className="flex flex-col items-center space-y-2">
       <h1 className="text-3xl font-bold">Welcome to Learnig React</h1>
@@ -16,6 +18,10 @@ export default function App() {
 
       {/* Event and state */}
       <ClickMe />
+
+      {/* Props */}
+      <Welcome text={greeting} />
+      <Welcome text="Excited to be here" />
     </div>
   );
 }
@@ -109,7 +115,7 @@ function ShoppingList() {
   return <ul>{listItems}</ul>;
 }
 
-// responding to events and updating the screen
+//5. responding to events and updating the screen
 function ClickMe() {
   const [count, setCount] = useState(0);
 
@@ -124,4 +130,13 @@ function ClickMe() {
       {count}
     </button>
   );
+}
+
+// 6. Props: passing data from component to component
+
+// Props: function parameters
+
+// Passing args to the function component: custom HTML attributes
+function Welcome(props) {
+  return <h2>{props.text}</h2>;
 }
