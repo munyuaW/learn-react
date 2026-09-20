@@ -148,6 +148,7 @@ function Welcome(props) {
 // props is a regular js object holding data to be passed to component
 // props is always the first argument in the function signature
 
+// the style attribute as an object
 const Greeting = ({ text }) => {
-  return <div>{text}</div>;
+  return <div style={{ color: "blue" }}>{text}</div>;
 };
