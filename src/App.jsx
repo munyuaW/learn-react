@@ -3,6 +3,11 @@ import { useState } from "react";
 export default function App() {
   const greeting = "Hello, and welcome";
 
+  const [text, setText] = useState("Welcome to React");
+  const handleChange = (e) => {
+    setText(e.target.value);
+  };
+
   return (
     <div className="flex flex-col items-center space-y-2">
       <h1 className="text-3xl font-bold">Welcome to Learnig React</h1>
@@ -24,6 +29,9 @@ export default function App() {
       <Welcome text="Excited to be here" />
 
       <Greeting text="Howdy!" />
+
+      {/* State as props */}
+      <InputText text={text} handleChange={handleChange} />
     </div>
   );
 }
@@ -151,4 +159,20 @@ function Welcome(props) {
 // the style attribute as an object
 const Greeting = ({ text }) => {
   return <div style={{ color: "blue" }}>{text}</div>;
+};
+
+// 7. State as Props
+
+const InputText = ({ text, handleChange }) => {
+  return (
+    <>
+      <input
+        className="text-sm border p-1"
+        type="text"
+        value={text}
+        onChange={handleChange}
+      />
+      <p className="font-bold">{text}</p>
+    </>
+  );
 };
