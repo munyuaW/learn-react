@@ -22,6 +22,8 @@ export default function App() {
       {/* Props */}
       <Welcome text={greeting} />
       <Welcome text="Excited to be here" />
+
+      <Greeting text="Howdy!" />
     </div>
   );
 }
@@ -140,3 +142,12 @@ function ClickMe() {
 function Welcome(props) {
   return <h2>{props.text}</h2>;
 }
+
+// destructuring props
+
+// props is a regular js object holding data to be passed to component
+// props is always the first argument in the function signature
+
+const Greeting = ({ text }) => {
+  return <div>{text}</div>;
+};
