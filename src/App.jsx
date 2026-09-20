@@ -5,11 +5,14 @@ export default function App() {
       <MyButton />
       <About />
       <Profile />
+
+      {/* Conditional rendering */}
+      <UserProfile />
     </div>
   );
 }
 
-// Simple component
+//1. Simple component
 function MyButton() {
   return (
     <button className="px-2 py-1.5 bg-cyan-500 rounded-lg text-white">
@@ -18,7 +21,7 @@ function MyButton() {
   );
 }
 
-// Displaying data
+//2. Displaying data
 // Using curly braces to escape back into js to embed variables from code
 const myName = "Munyua";
 
@@ -45,3 +48,35 @@ function Profile() {
     </div>
   );
 }
+
+// 3. Conditional rendering
+
+function UserProfile() {
+  let content;
+  let isLoggedIn = true;
+
+  if (isLoggedIn) {
+    content = <AdminPanel />;
+  } else {
+    content = <LoginForm />;
+  }
+
+  return <div>{content}</div>;
+
+  // altenative: ternary - works inside jsx
+  //   <div>
+  //   {isLoggedIn ? (
+  //     <AdminPanel />
+  //   ) : (
+  //     <LoginForm />
+  //   )}
+  // </div>
+}
+
+const AdminPanel = () => {
+  return <div>AdminPanel</div>;
+};
+
+const LoginForm = () => {
+  return <div>LoginForm</div>;
+};
