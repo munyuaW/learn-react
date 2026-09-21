@@ -32,6 +32,11 @@ export default function App() {
 
       {/* State as props */}
       <InputText text={text} handleChange={handleChange} />
+
+      {/* Children props */}
+      <Card>
+        <Avatar />
+      </Card>
     </div>
   );
 }
@@ -176,3 +181,18 @@ const InputText = ({ text, handleChange }) => {
     </>
   );
 };
+
+// 8. The children props: passing jsx as props
+function Card({ children }) {
+  return <div className="p-2 border rounded-lg">{children}</div>;
+}
+
+function Avatar() {
+  return (
+    <img
+      className="size-8 rounded-full"
+      src="https://react.dev/images/docs/scientists/yXOvdOSs.jpg"
+      alt=""
+    />
+  );
+}
