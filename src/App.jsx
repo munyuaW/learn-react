@@ -1,4 +1,5 @@
 import { useState } from "react";
+import { sculptureList } from "./data";
 
 export default function App() {
   const greeting = "Hello, and welcome";
@@ -8,8 +9,13 @@ export default function App() {
     setText(e.target.value);
   };
 
+  const [index, setIndex] = useState(0);
+  const handleClick = () => {
+    setIndex((prev) => (prev + 1) % sculptureList.length);
+  };
+
   return (
-    <div className="flex flex-col items-center space-y-2">
+    <div className="flex flex-col items-center space-y-2 mx-auto">
       <h1 className="text-3xl font-bold">Welcome to Learnig React</h1>
       <MyButton />
       <About />
@@ -37,6 +43,13 @@ export default function App() {
       <Card>
         <Avatar />
       </Card>
+
+      {/* Image carousel: State */}
+      <Gallery
+        index={index}
+        sculptureList={sculptureList}
+        onClick={handleClick}
+      />
     </div>
   );
 }
@@ -194,5 +207,28 @@ function Avatar() {
       src="https://react.dev/images/docs/scientists/yXOvdOSs.jpg"
       alt=""
     />
+  );
+}
+
+// State: a components memory
+function Gallery({ index, sculptureList, onClick }) {
+  let sculpture = sculptureList[index];
+  return (
+    <div className="max-w-2xl p-2.5">
+      <button
+        className="px-1.5 py-1 bg-cyan-400 text-white rounded-lg"
+        onClick={onClick}>
+        Next
+      </button>
+      <h2>
+        <i>{sculpture.name}</i>
+        by {sculpture.artist}
+      </h2>
+      <h3>
+        ({index + 1} of {sculptureList.length})
+      </h3>
+      <img src={sculpture.url} alt={sculpture.alt} />
+      <p>{sculpture.description}</p>
+    </div>
   );
 }
