@@ -10,8 +10,12 @@ export default function App() {
   };
 
   const [index, setIndex] = useState(0);
-  const handleClick = () => {
+  const [showMore, setShowMore] = useState(true);
+  const handleNext = () => {
     setIndex((prev) => (prev + 1) % sculptureList.length);
+  };
+  const togggleDetails = () => {
+    setShowMore((prev) => !prev);
   };
 
   return (
@@ -48,7 +52,9 @@ export default function App() {
       <Gallery
         index={index}
         sculptureList={sculptureList}
-        onClick={handleClick}
+        handleNext={handleNext}
+        toggleDetails={togggleDetails}
+        showMore={showMore}
       />
     </div>
   );
@@ -211,13 +217,19 @@ function Avatar() {
 }
 
 // State: a components memory
-function Gallery({ index, sculptureList, onClick }) {
+function Gallery({
+  index,
+  sculptureList,
+  handleNext,
+  showMore,
+  toggleDetails,
+}) {
   let sculpture = sculptureList[index];
   return (
     <div className="max-w-2xl p-2.5">
       <button
         className="px-1.5 py-1 bg-cyan-400 text-white rounded-lg"
-        onClick={onClick}>
+        onClick={handleNext}>
         Next
       </button>
       <h2>
@@ -228,7 +240,12 @@ function Gallery({ index, sculptureList, onClick }) {
         ({index + 1} of {sculptureList.length})
       </h3>
       <img src={sculpture.url} alt={sculpture.alt} />
-      <p>{sculpture.description}</p>
+      <button
+        className="px-1.5 py-1 bg-cyan-400 text-white rounded-lg"
+        onClick={toggleDetails}>
+        {showMore ? "Hide details" : "Show details"}
+      </button>
+      <p>{showMore && sculpture.description}</p>
     </div>
   );
 }
