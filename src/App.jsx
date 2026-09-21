@@ -9,15 +9,6 @@ export default function App() {
     setText(e.target.value);
   };
 
-  const [index, setIndex] = useState(0);
-  const [showMore, setShowMore] = useState(true);
-  const handleNext = () => {
-    setIndex((prev) => (prev + 1) % sculptureList.length);
-  };
-  const togggleDetails = () => {
-    setShowMore((prev) => !prev);
-  };
-
   return (
     <div className="flex flex-col items-center space-y-2 mx-auto">
       <h1 className="text-3xl font-bold">Welcome to Learnig React</h1>
@@ -49,13 +40,7 @@ export default function App() {
       </Card>
 
       {/* Image carousel: State */}
-      <Gallery
-        index={index}
-        sculptureList={sculptureList}
-        handleNext={handleNext}
-        toggleDetails={togggleDetails}
-        showMore={showMore}
-      />
+      <Gallery />
     </div>
   );
 }
@@ -217,21 +202,39 @@ function Avatar() {
 }
 
 // State: a components memory
-function Gallery({
-  index,
-  sculptureList,
-  handleNext,
-  showMore,
-  toggleDetails,
-}) {
+function Gallery() {
+  const [index, setIndex] = useState(0);
+  const [showMore, setShowMore] = useState(false);
   let sculpture = sculptureList[index];
+
+  const handleNext = () => {
+    setIndex((prev) => (prev + 1) % sculptureList.length);
+  };
+
+  const handlePrev = () => {
+    setIndex(
+      (prev) => (prev - 1 + sculptureList.length) % sculptureList.length
+    );
+  };
+
+  const toggleDetails = () => {
+    setShowMore((prev) => !prev);
+  };
+
   return (
     <div className="max-w-2xl p-2.5">
-      <button
-        className="px-1.5 py-1 bg-cyan-400 text-white rounded-lg"
-        onClick={handleNext}>
-        Next
-      </button>
+      <nav className="space-x-2.5">
+        <button
+          className="px-1.5 py-1 bg-cyan-400 text-white rounded-lg"
+          onClick={handlePrev}>
+          Previous
+        </button>
+        <button
+          className="px-1.5 py-1 bg-cyan-400 text-white rounded-lg"
+          onClick={handleNext}>
+          Next
+        </button>
+      </nav>
       <h2>
         <i>{sculpture.name}</i>
         by {sculpture.artist}
