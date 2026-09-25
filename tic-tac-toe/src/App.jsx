@@ -35,7 +35,7 @@ function Board() {
 
   return (
     <div className="mt-5 ml-10">
-      <dir>{status}</dir>
+      <div className="font-semibold mb-1">{status}</div>
       <div className="flex">
         <Square value={squares[0]} onSquareClick={() => handleClick(0)} />
         <Square value={squares[1]} onSquareClick={() => handleClick(1)} />
