@@ -1,13 +1,53 @@
 import { useState } from "react";
 
-export default function App() {
-  return <Board />;
+export default function Game() {
+  const [history, setHistory] = useState([Array(9).fill(null)]);
+  const [currentMove, setCurrentMove] = useState(0);
+  const xIsNext = currentMove % 2 === 0;
+  const currentSquares = history[currentMove];
+
+  const handlePlay = (nextSquares) => {
+    const nextHistory = [...history.slice(0, currentMove + 1), nextSquares];
+    setHistory(nextHistory);
+    setCurrentMove(nextHistory.length - 1);
+  };
+
+  const jumpTo = (nextMove) => {
+    setCurrentMove(nextMove);
+  };
+
+  const moves = history.map((squares, move) => {
+    let description;
+    if (move > 0) {
+      description = `Go to move # ${move}`;
+    } else {
+      description = `Go to game start`;
+    }
+
+    return (
+      <li key={move}>
+        <button
+          className="bg-cyan-200 px-2 py-1 rounded-sm cursor-pointer"
+          onClick={() => jumpTo(move)}>
+          {description}
+        </button>
+      </li>
+    );
+  });
+
+  return (
+    <div className="flex flex-col justify-center items-center space-y-1">
+      <div>
+        <Board xIsNext={xIsNext} squares={currentSquares} onPlay={handlePlay} />
+      </div>
+      <div>
+        <ol className="space-y-2.5">{moves}</ol>
+      </div>
+    </div>
+  );
 }
 
-function Board() {
-  const [xIsNext, setXIsNext] = useState(true);
-  const [squares, setSquares] = useState(Array(9).fill(null));
-
+function Board({ xIsNext, squares, onPlay }) {
   const handleClick = (i) => {
     // if square is already filled, or there is a winner do nothing
     if (squares[i] || calculateWinner(squares)) return;
@@ -20,8 +60,8 @@ function Board() {
       nextSquares[i] = "O";
     }
 
-    setSquares(nextSquares);
-    setXIsNext((prev) => !prev);
+    onPlay(nextSquares);
+    // setXIsNext((prev) => !prev);
   };
 
   const winner = calculateWinner(squares);
