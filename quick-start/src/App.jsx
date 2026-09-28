@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useState, useRef } from "react";
 import { sculptureList } from "./data";
 
 export default function App() {
@@ -41,6 +41,9 @@ export default function App() {
 
       {/* Image carousel: State */}
       <Gallery />
+
+      {/* useRef */}
+      <UseRefCounter />
     </div>
   );
 }
@@ -250,5 +253,71 @@ function Gallery() {
       </button>
       <p>{showMore && sculpture.description}</p>
     </div>
+  );
+}
+
+// 9. useRef hook:
+// When you want a component to “remember” some information,
+// but you don’t want that information to trigger new renders
+function UseRefCounter() {
+  let ref = useRef(0);
+  const handleClick = () => {
+    ref.current += 1;
+    alert(`You clicked the button ${ref.current} times`);
+  };
+
+  return (
+    <div className="mt-2.5 text-center space-y-1 p-2.5">
+      <h1 className="font-bold">useRef: Referencing values with ref</h1>
+      <button
+        className="px-1.5 py-1 bg-cyan-400 text-white rounded-lg"
+        onClick={handleClick}>
+        Click me!
+      </button>
+
+      <Stopwatch />
+    </div>
+  );
+}
+
+function Stopwatch() {
+  const [startTime, setStartTime] = useState(null);
+  const [now, setNow] = useState(null);
+  // Since the interval ID is not used for rendering, you can keep it in a ref
+  const intervalRef = useRef(null);
+
+  function handleStart() {
+    setStartTime(Date.now());
+    setNow(Date.now());
+
+    clearInterval(intervalRef.current);
+    intervalRef.current = setInterval(() => {
+      setNow(Date.now());
+    }, 10);
+  }
+
+  function handleStop() {
+    clearInterval(intervalRef.current);
+  }
+
+  let secondsPassed = 0;
+  if (startTime && now) {
+    secondsPassed = (now - startTime) / 1000;
+  }
+
+  return (
+    <>
+      <h1>Time passed: {secondsPassed.toFixed(2)}</h1>
+      <button
+        className="px-1.5 py-1 bg-cyan-400 text-white rounded-lg"
+        onClick={handleStart}>
+        Start
+      </button>
+      <button
+        className="px-1.5 py-1 bg-cyan-400 text-white rounded-lg"
+        onClick={handleStop}>
+        Stop
+      </button>
+    </>
   );
 }
