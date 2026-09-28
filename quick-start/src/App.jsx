@@ -10,7 +10,7 @@ export default function App() {
   };
 
   return (
-    <div className="flex flex-col items-center space-y-2 mx-auto">
+    <div className="flex flex-col items-center space-y-3 mx-auto py-6">
       <h1 className="text-3xl font-bold">Welcome to Learnig React</h1>
       <MyButton />
       <About />
@@ -44,6 +44,9 @@ export default function App() {
 
       {/* useRef */}
       <UseRefCounter />
+
+      {/* useRef: Manipulating a DOM node */}
+      <Form />
     </div>
   );
 }
@@ -319,5 +322,23 @@ function Stopwatch() {
         Stop
       </button>
     </>
+  );
+}
+
+// 10. Accessing a DOM node managed by React
+// a. Focus an input
+function Form() {
+  const inputRef = useRef(null);
+  const handleClick = () => {
+    inputRef.current.focus();
+  };
+
+  return (
+    <div>
+      <input ref={inputRef} className="p-1" type="text" />
+      <button className="bg-gray-400 p-1" onClick={handleClick}>
+        Focus the input
+      </button>
+    </div>
   );
 }
