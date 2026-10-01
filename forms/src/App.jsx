@@ -1,4 +1,5 @@
 import ControlledForm from "./ControlledForm";
+import UncontrolledForm from "./UncontrolledForm";
 
 export default function App() {
   return (
@@ -7,6 +8,9 @@ export default function App() {
 
       <h3>1. Controlled Forms</h3>
       <ControlledForm />
+
+      <h3>2. Uncontrolled Form</h3>
+      <UncontrolledForm />
     </div>
   );
 }
