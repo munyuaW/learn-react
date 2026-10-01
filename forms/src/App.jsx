@@ -1,4 +1,5 @@
 import ControlledForm from "./ControlledForm";
+import SuperheroForm from "./SuperheroForm";
 import UncontrolledForm from "./UncontrolledForm";
 
 export default function App() {
@@ -11,6 +12,8 @@ export default function App() {
 
       <h3>2. Uncontrolled Form</h3>
       <UncontrolledForm />
+
+      <SuperheroForm />
     </div>
   );
 }
