@@ -1,4 +1,5 @@
 import ControlledForm from "./ControlledForm";
+import EventRSVPForm from "./EventRSVPForm";
 import SuperheroForm from "./SuperheroForm";
 import UncontrolledForm from "./UncontrolledForm";
 
@@ -14,6 +15,8 @@ export default function App() {
       <UncontrolledForm />
 
       <SuperheroForm />
+
+      <EventRSVPForm />
     </div>
   );
 }
