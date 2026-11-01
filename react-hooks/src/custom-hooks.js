@@ -76,3 +76,56 @@ export function useForm(initialValues = {}) {
     resetForm,
   };
 }
+
+// 4. useFetch
+
+export function useFetch(url) {
+  const [result, setResult] = useState({
+    url: null,
+    settled: false,
+    data: null,
+    error: null,
+  });
+
+  useEffect(() => {
+    let ignore = false;
+
+    async function fetchData() {
+      try {
+        const response = await fetch(url);
+        if (!response.ok) {
+          throw new Error(`HTTP Error! Status: ${response.status}`);
+        }
+
+        const data = await response.json();
+
+        if (!ignore) {
+          setResult({ url, settled: true, data, error: null });
+        }
+      } catch (err) {
+        if (!ignore) {
+          setResult({
+            url,
+            settled: true,
+            data: null,
+            error: err instanceof Error ? err.message : String(err),
+          });
+        }
+      }
+    }
+
+    fetchData();
+
+    return () => {
+      ignore = true;
+    };
+  }, [url]);
+
+  const loading = !result.settled || result.url !== url;
+
+  return {
+    loading,
+    data: result.data,
+    error: loading ? null : result.error,
+  };
+}
